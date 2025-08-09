@@ -5,10 +5,35 @@ code {
 }
 
 @font-face {
+  font-family: "DNFBitBit";
+  font-weight: normal;
+  src: url("./fonts/DNFBitBitTTF.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "TJJoyofsingingB";
   font-weight: normal;
-  src: url("C:\Users\abcd2\hereyongin\src\fonts\TJJoyofsingingB_TTF.ttf") format("truetype");
+  src: url("./fonts/TJJoyofsingingB_TTF.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "TJJoyofsingingEB";
+  font-weight: normal;
+  src: url("./fonts/TJJoyofsingingEB_TTF.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "TJJoyofsingingL";
+  font-weight: normal;
+  src: url("./fonts/TJJoyofsingingL_TTF.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "TJJoyofsingingM";
+  font-weight: normal;
+  src: url("./fonts/TJJoyofsingingM_TTF.ttf") format("truetype");
+}
+
 
 body {
   margin: 0;
