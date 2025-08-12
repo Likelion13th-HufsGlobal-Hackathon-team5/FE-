@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import bgImage from "../assets/signup-bg.png";
 
-// 폰트 파일 import
+/* === 폰트 파일 import === */
 import DNFBitBit from "../fonts/DNFBitBitTTF.ttf";
 import JoyM from "../fonts/TJJoyofsingingM_TTF.ttf";
 
-// 전역 폰트 등록
+/* === 전역 폰트 등록 === */
 const FontStyles = createGlobalStyle`
   @font-face {
     font-family: 'DNFBitBitTTF';
@@ -26,11 +26,24 @@ const FontStyles = createGlobalStyle`
 `;
 
 export default function Signin() {
+  const [nickname, setNickname] = useState("");
+  const [isNickAvailable, setIsNickAvailable] = useState(null);
+
   const [id, setId] = useState("");
   const [isIdAvailable, setIsIdAvailable] = useState(null);
+
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isPasswordMatch, setIsPasswordMatch] = useState(null);
+
+  // 닉네임 중복 확인
+  const checkNickAvailability = () => {
+    if (nickname === "testnick") {
+      setIsNickAvailable(false);
+    } else {
+      setIsNickAvailable(true);
+    }
+  };
 
   // 아이디 중복 확인
   const checkIdAvailability = () => {
@@ -50,12 +63,29 @@ export default function Signin() {
   return (
     <Container>
       <FontStyles />
-
       <Title>회원가입</Title>
-
       <Form>
+
         {/* 닉네임 */}
-        <InputBox placeholder="닉네임" />
+        <div>
+          <IdRow>
+            <IdInput
+              placeholder="닉네임"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+            <CheckButton onClick={checkNickAvailability}>
+              중복<br />확인
+            </CheckButton>
+          </IdRow>
+          {isNickAvailable !== null && (
+            <Helper style={{ color: isNickAvailable ? "#00CA98" : "#FF5656" }}>
+              {isNickAvailable
+                ? "사용 가능한 닉네임입니다!"
+                : "이미 사용 중입니다!"}
+            </Helper>
+          )}
+        </div>
 
         {/* 출생연도 */}
         <div>
@@ -76,11 +106,7 @@ export default function Signin() {
             </CheckButton>
           </IdRow>
           {isIdAvailable !== null && (
-            <Helper
-              style={{
-                color: isIdAvailable ? "#00CA98" : "#FF5656",
-              }}
-            >
+            <Helper style={{ color: isIdAvailable ? "#00CA98" : "#FF5656" }}>
               {isIdAvailable
                 ? "사용 가능한 아이디입니다!"
                 : "이미 사용 중입니다!"}
@@ -105,11 +131,7 @@ export default function Signin() {
             onChange={(e) => handlePasswordConfirm(e.target.value)}
           />
           {isPasswordMatch !== null && (
-            <Helper
-              style={{
-                color: isPasswordMatch ? "#00CA98" : "#FF5656",
-              }}
-            >
+            <Helper style={{ color: isPasswordMatch ? "#00CA98" : "#FF5656" }}>
               {isPasswordMatch
                 ? "비밀번호가 일치합니다!"
                 : "비밀번호가 일치하지 않습니다!"}
@@ -125,43 +147,42 @@ export default function Signin() {
 }
 
 /* ===== styled-components ===== */
-
 const Container = styled.div`
-  width: 24.5625rem; /* 393px */
-  height: 53.25rem; /* 852px */
+  width: 24.5625rem;
+  height: 53.25rem;
   background: url(${bgImage}) no-repeat center center;
   background-size: contain;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2.5rem 1.25rem; /* 40px 20px */
+  padding: 2.5rem 1.25rem;
   margin: 0 auto;
 `;
 
 const Title = styled.h1`
-  font-size: 3rem; /* 48px */
+  font-size: 3rem;
   color: #4CAF50;
-  margin-top: 3.75rem; /* 60px */
+  margin-top: 3.75rem;
   font-family: 'JoyM', sans-serif;
 `;
 
 const Form = styled.div`
-  width: 17.25rem; /* 276px */
-  margin-top: 1.875rem; /* 30px */
+  width: 17.25rem;
+  margin-top: 1.875rem;
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 1.875rem; /* 30px */
+  gap: 1.875rem;
 `;
 
 const InputBox = styled.input`
-  width: 17.25rem; /* 276px */
-  height: 3rem; /* 48px */
+  width: 17.25rem;
+  height: 3rem;
   box-sizing: border-box;
-  border: 0.125rem solid #8F8F8F; /* 2px */
-  border-radius: 0.625rem; /* 10px */
-  font-size: 1rem; /* 16px */
-  padding-left: 1rem; /* 16px */
+  border: 0.125rem solid #8F8F8F;
+  border-radius: 0.625rem;
+  font-size: 1rem;
+  padding-left: 1rem;
   outline: none;
   font-family: 'JoyM', sans-serif;
 
@@ -172,8 +193,8 @@ const InputBox = styled.input`
 
 const Helper = styled.p`
   margin: 0;
-  padding-top: 0.625rem; /* 10px */
-  font-size: 1rem; /* 16px */
+  padding-top: 0.625rem;
+  font-size: 1rem;
   text-align: left;
   font-family: 'JoyM', sans-serif;
 `;
@@ -181,22 +202,22 @@ const Helper = styled.p`
 const IdRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.3125rem; /* 5px */
+  gap: 0.3125rem;
 `;
 
 const IdInput = styled(InputBox)`
-  width: 13.8125rem; /* 221px */
+  width: 13.8125rem;
   flex: none;
 `;
 
 const CheckButton = styled.button`
-  width: 3.125rem; /* 50px */
-  height: 3rem; /* 48px */
+  width: 3.125rem;
+  height: 3rem;
   background-color: #32885D;
   color: #fff;
-  font-size: 0.8125rem; /* 13px */
+  font-size: 0.8125rem;
   border: none;
-  border-radius: 0.625rem; /* 10px */
+  border-radius: 0.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -206,18 +227,18 @@ const CheckButton = styled.button`
 `;
 
 const SignUpButton = styled.button`
-  width: 13.5625rem; /* 217px */
-  height: 3.625rem; /* 58px */
+  width: 13.5625rem;
+  height: 3.625rem;
   background-color: #66CE94;
   color: #fff;
-  font-size: 2rem; /* 32px */
+  font-size: 2rem;
   border: none;
-  border-radius: 6.25rem; /* 100px */
+  border-radius: 6.25rem;
   cursor: pointer;
-  margin-top: 1.875rem; /* 30px */
+  margin-top: 1.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'DNFBitBitTTF', sans-serif;
-  box-shadow: 0.125rem 0.25rem 0.4375rem rgba(0, 0, 0, 0.3); /* 2px 4px 7px */
+  box-shadow: 0.125rem 0.25rem 0.4375rem rgba(0, 0, 0, 0.3);
 `;
